@@ -17,18 +17,6 @@ const products = [
 export default function Page() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [submitted, setSubmitted] = useState(false)
-  const [adminOpen, setAdminOpen] = useState(false)
-  const [adminLoggedIn, setAdminLoggedIn] = useState(false)
-  const [adminEmail, setAdminEmail] = useState('')
-  const [adminPassword, setAdminPassword] = useState('')
-
-  function handleAdminLogin(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    if (adminEmail === 'admin@fieldcraft.agri' && adminPassword === 'Fieldcraft2026!') {
-      setAdminLoggedIn(true)
-    }
-  }
-
   return (
     <main className="site-shell">
       <div className="topbar"><span>Trusted agricultural equipment since 1987</span><span className="topbar-right">NL / EN <span className="dot">·</span> Mon–Fri 08:00–17:30</span></div>
@@ -36,7 +24,7 @@ export default function Page() {
         <a href="#top" className="brand" aria-label="Fieldcraft home"><span className="brand-mark">F</span><span>FIELDCRAFT<span className="brand-sub">AGRICULTURAL SOLUTIONS</span></span></a>
         <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle navigation">{menuOpen ? 'Close' : 'Menu'}</button>
         <nav className={menuOpen ? 'nav nav-open' : 'nav'} aria-label="Main navigation">
-          <a href="#services" onClick={() => setMenuOpen(false)}>Services</a><a href="#about" onClick={() => setMenuOpen(false)}>About us</a><a href="#products" onClick={() => setMenuOpen(false)}>Products</a><a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a><a href="#admin" onClick={() => setMenuOpen(false)}>Admin portal</a>
+          <a href="#services" onClick={() => setMenuOpen(false)}>Services</a><a href="#about" onClick={() => setMenuOpen(false)}>About us</a><a href="#products" onClick={() => setMenuOpen(false)}>Products</a><a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a>
           <a className="nav-cta" href="#contact" onClick={() => setMenuOpen(false)}>Talk to an expert <span>↗</span></a>
         </nav>
       </header>
@@ -57,8 +45,6 @@ export default function Page() {
       <section className="quote-section"><p className="eyebrow">A better way to work</p><blockquote>“When the season is short, there&apos;s no room for compromise. We make sure you&apos;re ready.”</blockquote><div className="quote-person"><div className="avatar">JD</div><span><b>Jan de Vries</b><small>Managing director, Fieldcraft</small></span></div></section>
 
       <section id="contact" className="contact-section"><div className="contact-copy"><p className="eyebrow">Let&apos;s talk</p><h2>Ready to get<br /><em>moving?</em></h2><p>Tell us what you&apos;re working on. We&apos;ll help you find the right solution, without the hard sell.</p><div className="contact-details"><a href="tel:+31201234567">+31 (0)20 123 45 67</a><a href="mailto:hello@fieldcraft.agri">hello@fieldcraft.agri</a><span>Industrieweg 24, 8013 NW Zwolle</span></div></div><form className="contact-form" onSubmit={(e) => { e.preventDefault(); setSubmitted(true) }}>{submitted ? <div className="success"><span>✓</span><h3>Thanks for reaching out.</h3><p>We&apos;ll be in touch within one business day.</p><button type="button" className="text-link" onClick={() => setSubmitted(false)}>Send another message</button></div> : <><div className="form-row"><label>Name<input required name="name" placeholder="Your name" /></label><label>Email<input required type="email" name="email" placeholder="you@company.com" /></label></div><label>How can we help?<select name="topic" defaultValue=""><option value="" disabled>Select a topic</option><option>Machinery</option><option>Parts & wear</option><option>Service & repair</option><option>Other</option></select></label><label>Message<textarea name="message" rows={4} placeholder="Tell us a little about your project..." /></label><button className="button button-dark" type="submit">Send inquiry <span>↗</span></button></>}</form></section>
-
-      <section id="admin" className="admin-section"><div className="admin-heading"><p className="eyebrow">Private workspace</p><h2>Admin <em>portal.</em></h2><p>Manage inquiries, service content and site settings from one simple workspace. This is a front-end demo for the WordPress hand-off.</p></div>{adminLoggedIn ? <div className="admin-dashboard"><div className="admin-dashboard-top"><div><span className="admin-kicker">Welcome back</span><h3>Good morning, Afaq.</h3></div><button className="text-link" type="button" onClick={() => setAdminLoggedIn(false)}>Sign out <span>→</span></button></div><div className="admin-metrics"><div><strong>12</strong><span>New inquiries</span></div><div><strong>08</strong><span>Service pages</span></div><div><strong>04</strong><span>Draft updates</span></div></div><div className="admin-actions"><button type="button" onClick={() => alert('Demo: WordPress page editor opened.')}>Edit service pages <span>↗</span></button><button type="button" onClick={() => alert('Demo: inquiries inbox opened.')}>View inquiries <span>↗</span></button><button type="button" onClick={() => alert('Demo: media library opened.')}>Media library <span>↗</span></button></div></div> : <form className="admin-login" onSubmit={handleAdminLogin}><div className="demo-credentials"><span>Demo credentials</span><strong>admin@fieldcraft.agri</strong><strong>Fieldcraft2026!</strong></div><label>Email<input type="email" required value={adminEmail} onChange={(event) => setAdminEmail(event.target.value)} placeholder="admin@fieldcraft.agri" /></label><label>Password<input type="password" required value={adminPassword} onChange={(event) => setAdminPassword(event.target.value)} placeholder="Enter demo password" /></label><button className="button button-dark" type="submit">Access portal <span>↗</span></button><small>Demo UI only — connect this screen to WordPress authentication before launch.</small></form>}</section>
 
       <footer className="footer"><div className="footer-brand"><a href="#top" className="brand"><span className="brand-mark">F</span><span>FIELDCRAFT<span className="brand-sub">AGRICULTURAL SOLUTIONS</span></span></a><p>Practical solutions for<br />people who grow things.</p></div><div className="footer-links"><div><b>Explore</b><a href="#services">Services</a><a href="#about">About us</a><a href="#products">Products</a></div><div><b>Contact</b><a href="#contact">Get in touch</a><a href="tel:+31201234567">+31 (0)20 123 45 67</a><a href="mailto:hello@fieldcraft.agri">Email us</a></div><div><b>Follow</b><a href="#top">LinkedIn ↗</a><a href="#top">Instagram ↗</a></div></div><div className="footer-bottom"><span>© 2026 Fieldcraft Agricultural Solutions</span><span>Developed by Afaq Ahmad &nbsp; · &nbsp; Privacy policy &nbsp; Cookies</span></div></footer>
     </main>
