@@ -2,8 +2,11 @@
 
 import { FormEvent, useState } from 'react'
 
+const navItems = ['Overview', 'Inquiries', 'Services', 'Products', 'Media library', 'Site settings']
+
 export default function AdminPage() {
   const [signedIn, setSignedIn] = useState(false)
+  const [active, setActive] = useState('Overview')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -13,45 +16,12 @@ export default function AdminPage() {
     if (email === 'admin@fieldcraft.agri' && password === 'Fieldcraft2026!') {
       setSignedIn(true)
       setError('')
-      return
-    }
-    setError('Use the demo credentials shown below.')
+    } else setError('Use the demo credentials shown below.')
   }
 
-  if (!signedIn) {
-    return (
-      <main className="admin-page">
-        <div className="admin-login-shell">
-          <a href="/" className="brand" aria-label="Return to Fieldcraft homepage">
-            <span className="brand-mark">F</span>
-            <span>FIELDCRAFT<span className="brand-sub">AGRICULTURAL SOLUTIONS</span></span>
-          </a>
-          <div className="admin-login-card">
-            <p className="eyebrow">Private workspace</p>
-            <h1>Admin <em>portal.</em></h1>
-            <p className="admin-lead">Sign in to manage inquiries, services and website content.</p>
-            <form onSubmit={handleSubmit} className="admin-login-form">
-              <label>Email<input required type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="admin@fieldcraft.agri" /></label>
-              <label>Password<input required type="password" value={password} onChange={(event) => setPassword(event.target.value)} placeholder="Your password" /></label>
-              {error && <p className="admin-error" role="alert">{error}</p>}
-              <button className="button button-dark" type="submit">Sign in <span>↗</span></button>
-            </form>
-            <div className="demo-credentials"><span>Demo access</span><strong>admin@fieldcraft.agri</strong><strong>Fieldcraft2026!</strong></div>
-            <a href="/" className="admin-back">← Back to public website</a>
-          </div>
-        </div>
-      </main>
-    )
-  }
-
-  return (
-    <main className="admin-page">
-      <header className="admin-bar"><a href="/" className="brand"><span className="brand-mark">F</span><span>FIELDCRAFT<span className="brand-sub">ADMINISTRATION</span></span></a><div className="admin-bar-actions"><span>Afaq Ahmad · Developer</span><button onClick={() => setSignedIn(false)}>Sign out</button></div></header>
-      <section className="admin-dashboard-page">
-        <div className="admin-dashboard-heading"><div><p className="eyebrow">Overview · 13 September 2026</p><h1>Good morning, <em>Afaq.</em></h1><p>Here&apos;s what&apos;s happening across your Fieldcraft website.</p></div><a href="/" className="button button-dark">View live site <span>↗</span></a></div>
-        <div className="dashboard-metric-grid"><article><span>New inquiries</span><strong>12</strong><small>+18% this month</small></article><article><span>Service pages</span><strong>08</strong><small>All content up to date</small></article><article><span>Site performance</span><strong>96</strong><small>Excellent · Core Web Vitals</small></article><article><span>Last published</span><strong>2d</strong><small>13 September 2026</small></article></div>
-        <div className="admin-panel-grid"><section className="admin-panel"><div className="panel-heading"><div><p className="admin-kicker">Latest activity</p><h2>Recent inquiries</h2></div><button>View all ↗</button></div><div className="inquiry-list"><div><span className="inquiry-avatar">MV</span><span><b>Mark van Dijk</b><small>Machinery · 12 Sep 2026</small></span><strong>New</strong></div><div><span className="inquiry-avatar">LS</span><span><b>Laura Smit</b><small>Parts & wear · 11 Sep 2026</small></span><strong>New</strong></div><div><span className="inquiry-avatar">PT</span><span><b>Pieter de Tiel</b><small>Service & repair · 10 Sep 2026</small></span><strong className="read">Read</strong></div></div></section><section className="admin-panel quick-panel"><p className="admin-kicker">Quick actions</p><h2>Keep things moving.</h2><button>Edit service pages <span>↗</span></button><button>Update contact details <span>↗</span></button><button>Manage inquiries <span>↗</span></button></section></div>
-      </section>
-    </main>
+  if (!signedIn) return (
+    <main className="admin-page"><div className="admin-login-shell"><a href="/" className="brand" aria-label="Return to Fieldcraft homepage"><span className="brand-mark">F</span><span>FIELDCRAFT<span className="brand-sub">AGRICULTURAL SOLUTIONS</span></span></a><div className="admin-login-card"><p className="eyebrow">Private workspace</p><h1>Admin <em>portal.</em></h1><p className="admin-lead">Sign in to manage inquiries, services and website content.</p><form onSubmit={handleSubmit} className="admin-login-form"><label>Email<input required type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="admin@fieldcraft.agri" /></label><label>Password<input required type="password" value={password} onChange={(event) => setPassword(event.target.value)} placeholder="Your password" /></label>{error && <p className="admin-error" role="alert">{error}</p>}<button className="button button-dark" type="submit">Sign in <span>↗</span></button></form><div className="demo-credentials"><span>Demo access</span><strong>admin@fieldcraft.agri</strong><strong>Fieldcraft2026!</strong></div><a href="/" className="admin-back">← Back to public website</a></div></div></main>
   )
+
+  return <main className="admin-page"><aside className="admin-sidebar"><a href="/" className="brand"><span className="brand-mark">F</span><span>FIELDCRAFT<span className="brand-sub">ADMINISTRATION</span></span></a><div className="sidebar-label">Workspace</div><nav aria-label="Admin navigation">{navItems.map((item, index) => <button key={item} className={active === item ? 'active' : ''} onClick={() => setActive(item)}><span className="sidebar-icon">{['⌂', '✉', '◌', '▦', '▧', '⚙'][index]}</span>{item}{item === 'Inquiries' && <b>12</b>}</button>)}</nav><div className="sidebar-bottom"><a href="/">View live site ↗</a><button onClick={() => setSignedIn(false)}>Sign out</button></div></aside><section className="admin-main"><header className="admin-bar"><div className="admin-mobile-title">FIELDCRAFT / {active}</div><div className="admin-bar-actions"><span className="admin-status"><i /> All systems operational</span><span>Afaq Ahmad · Developer</span><button onClick={() => setSignedIn(false)}>Sign out</button></div></header><div className="admin-dashboard-page"><div className="admin-dashboard-heading"><div><p className="eyebrow">{active} · 13 September 2026</p><h1>Good morning, <em>Afaq.</em></h1><p>Here&apos;s what&apos;s happening across your Fieldcraft website.</p></div><a href="/" className="button button-dark">View live site <span>↗</span></a></div><div className="dashboard-metric-grid"><article><span>New inquiries</span><strong>12</strong><small>+18% this month</small></article><article><span>Published pages</span><strong>08</strong><small>All content up to date</small></article><article><span>Site performance</span><strong>96</strong><small>Excellent · Core Web Vitals</small></article><article><span>Last published</span><strong>2d</strong><small>13 September 2026</small></article></div><div className="admin-panel-grid"><section className="admin-panel"><div className="panel-heading"><div><p className="admin-kicker">Latest activity</p><h2>Recent inquiries</h2></div><button onClick={() => setActive('Inquiries')}>View all ↗</button></div><div className="inquiry-list"><div><span className="inquiry-avatar">MV</span><span><b>Mark van Dijk</b><small>Machinery · 12 Sep 2026</small></span><strong>New</strong></div><div><span className="inquiry-avatar">LS</span><span><b>Laura Smit</b><small>Parts & wear · 11 Sep 2026</small></span><strong>New</strong></div><div><span className="inquiry-avatar">PT</span><span><b>Pieter de Tiel</b><small>Service & repair · 10 Sep 2026</small></span><strong className="read">Read</strong></div></div></section><section className="admin-panel quick-panel"><p className="admin-kicker">Quick actions</p><h2>Keep things moving.</h2><button onClick={() => setActive('Services')}>Edit service pages <span>↗</span></button><button onClick={() => setActive('Products')}>Update product range <span>↗</span></button><button onClick={() => setActive('Site settings')}>Manage site settings <span>↗</span></button></section></div><section className="admin-panel content-health"><div><p className="admin-kicker">Content health</p><h2>Your site is looking sharp.</h2><p>Every core page is published, optimized and ready for visitors.</p></div><div className="health-bars"><span><b>SEO setup</b><i><em style={{width: '92%'}} /></i><strong>92%</strong></span><span><b>Accessibility</b><i><em style={{width: '96%'}} /></i><strong>96%</strong></span><span><b>Media optimization</b><i><em style={{width: '84%'}} /></i><strong>84%</strong></span></div></section></div></section></main>
 }
